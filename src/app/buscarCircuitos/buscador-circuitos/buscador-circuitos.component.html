@@ -1,0 +1,232 @@
+<div class="fondo">
+  <br>
+
+<form [formGroup]="formBuscador2" >
+
+<div class="form-flex-coumn">
+  <div class="form-flex-row text-center">
+
+
+  <!-- TIPO BUSQUEDA -->
+  <div>
+    
+<mat-radio-group aria-label="Elija una opción" formControlName="tipoBusqueda" class="flex-radio-button" style=" border-color: #d2cfcd;
+width: 60%;
+border-style: ridge;" (change)="changeTipoBusqueda($event.value)">
+  <mat-radio-button value="Aleatorio">Aleatorio</mat-radio-button>
+  <mat-radio-button value="Secuencial">Secuencial</mat-radio-button>
+  <mat-radio-button value="Tipo">Por tipo</mat-radio-button>
+  <mat-error *ngIf="f['tipoBusqueda'].errors && f['tipoBusqueda'].errors['required']">Ingrese un criterio de busqueda...</mat-error>
+</mat-radio-group>
+
+<div>
+ 
+  <mat-form-field appearance="fill" *ngIf="formBuscador2.get('tipoBusqueda')?.value=='Tipo'">
+    <mat-label>tipo:</mat-label>
+    <mat-select formControlName="tipoCalle"  (selectionChange)="changeTipoCalle($event.value)" required aria-label="tipo de calle">
+      <mat-option *ngFor="let tipo of tipos" [value]="tipo" >
+        {{tipo.tipo}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="f['tipoCalle'].errors && f['tipoCalle'].errors['required']">Ingrese un tipo de busqueda</mat-error>
+    <mat-hint>{{f['tipoCalle'].value?.sound}}</mat-hint>
+  </mat-form-field>
+  </div>
+<!-- fin select tipo -->
+
+
+
+</div>
+
+<div class="text-center">
+  <button button-toggle aria-label="anterior" *ngIf="paginaCodigoActual>0" (click)="codigoAnterior()" >Anterior </button>
+
+ <mat-form-field class="example-full-width" appearance="fill">
+   <mat-label><span class="material-icons" aria-label="buscar">search</span></mat-label>
+    <input type="text" matInput formControlName="calle"   [matAutocomplete]="autoCalle"  (click)="clickSelectCalle()" (keydown)="searchCalle($event)">
+    <mat-autocomplete #autoCalle="matAutocomplete" [displayWith]="displayTramo" (optionSelected)="selectCalle($event)"  aria-label="buscar calle">
+        <mat-option *ngFor="let option of filteredOptionsCalles | async" [value]="option">
+          {{ option?.tipo}} {{option?.nombrecall}} {{ option?.numero}} 
+        
+        </mat-option>
+    </mat-autocomplete>
+   
+
+</mat-form-field>
+
+
+
+<button button-toggle aria-label="siguiente"*ngIf="arregloTramosPorCodigo.length>=0 && (paginaCodigoActual-1)<arregloTramosPorCodigo!.length"(click)="siguienteCodigo()">
+siguiente<mat-icon matTooltip="siguiente" matTooltipPosition="right" aria-label="codigo siguiente" >arrow_right</mat-icon>
+</button>
+
+
+
+
+
+  <br>
+  <mat-label>{{tipo_calle_selected==null?" ":tipo_calle_selected}} </mat-label>
+  <mat-form-field appearance="fill" disabled >
+    <input matInput formControlName="nombre_calle_selected" >
+  </mat-form-field>
+</div>
+<!-- select -->
+
+<div>
+
+
+  <app-autocomplete-partidos (selectPartido)="changePartido($event)" [showDefaultFirstElement]="true"></app-autocomplete-partidos>   
+<!--mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Partido</mat-label>
+  <input type="text" matInput formControlName="partido" (click)="clickSelectPartido()"  [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="c($event)" aria-label="partidos">
+    <mat-option *ngFor="let option of filteredOptionsPartido | async" [value]="option">
+      {{option.detalle_seccion}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field-->
+
+<br>
+<!-- select tipo -->
+
+
+
+</div>
+<!--label>{{formBuscador2.get('partidoControl')?.value}}</label-->
+<label *ngIf="partidoSelected!=undefined">{{partidoSelected===""?"":"CD "+partidoSelected}} </label>
+
+<!-- select fin select-->
+
+<div>
+  
+  <br>
+   Elija la PRIMERA calle y presione el botón <button class="btn btn-secondary"  (click)="verCruce()">CRUCE</button>
+</div>
+
+
+</div><!--form-flex text-center-->
+
+<!-- TEXT AREA OBSERVACIONES -->
+<mat-label>Observaciones:</mat-label>
+<mat-form-field>
+  <textarea matInput 
+     formControlName="detalle_observaciones" aria-label="observaciones"
+     readonly
+   >
+  </textarea>
+</mat-form-field>
+</div>
+<!-- FIN TEXT AREA OBSERVACIONES-->
+
+
+</form>
+
+
+
+<table mat-table [dataSource]="dataSourceTramos" class="mat-elevation-z8" #tableTramos matSort>
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="ciudad">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Localidad, Barrio o Villa. </th>
+    <td mat-cell *matCellDef="let element"> {{element.localidad== " " ? element.numero : element.localidad}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="vereda">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vereda. </th>
+    <td mat-cell *matCellDef="let element"> {{element.vereda}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="desde">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Desde. </th>
+    <td mat-cell *matCellDef="let element"> {{element.desde}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="hasta">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Hasta. </th>
+    <td mat-cell *matCellDef="let element"> {{element.hasta}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="circuito">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Circuito. </th>
+    <td mat-cell *matCellDef="let element"> {{element.circuito}} </td>
+  </ng-container>
+
+
+
+  <ng-container matColumnDef="observacion">
+    <th mat-header-cell *matHeaderCellDef> Observaciones. </th>
+    <td mat-cell *matCellDef="let element" class="truncate-text" id="id_tramo-{{element.id_tramo}}"
+      (mouseover)="clickElement(element)"> {{element.observacion}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipoCalle">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo calle. </th>
+    <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nombrecall">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre calle. </th>
+    <td mat-cell *matCellDef="let element"> {{element.numero!=""?(element.nombrecall!=""?(element.nombrecall+"("+element.numero+")"):element.nombrecall):(element.numero) }}  </td>
+  </ng-container>
+
+  <ng-container matColumnDef="codigo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo. </th>
+    <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="id_tramo">
+    <th mat-header-cell *matHeaderCellDef> id tramo. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id_tramo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon *ngIf="serviceAuth.getTienePermisoPorDescripcion(['SUPERVISOR','ADMIN'])" (click)="moficarTramo(element)" data-message="Moficar tramo" aria-haspopup=”dialog” aria-label="Moficar tramo">update</mat-icon>
+      <mat-icon *ngIf="serviceAuth.getTienePermisoPorDescripcion(['SUPERVISOR','ADMIN'])" (click)="bajaTramo(element)" data-message="borrar tramo" aria-haspopup=”dialog” aria-label="borrar tramo">delete</mat-icon>
+    </td>
+</ng-container>
+  
+  
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'rowSelectedColor':row.id_tramo==tramoSelected?.id_tramo}" (click)="clickRowElement(row)"></tr>
+
+  
+</table>
+<mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
+<div>
+
+
+  <div class="d-flex align-items-end justify-content-between">
+    <div class="flex-column">
+      <label class="custom-control-label" for="anterior">Anterior</label>
+      <input id="anterior" type="type" class="custom-control-input" value="anterior" name="anterior"  [(ngModel)]="anterior.view_codigo" disabled aria-label="codigo anterior">
+      <button *ngIf="anterior.view_codigo" button-toggle (click)="verAntPost(anterior)">ver</button>
+      <br><label class="custom-control-label" for="posterior">Posterior</label>
+      <input id="posterior" type="type" class="custom-control-input" value="posterior" name="posterior"   [(ngModel)]="posterior.view_codigo" disabled aria-label="codigo posterior">
+      <button *ngIf="posterior.view_codigo" button-toggle (click)="verAntPost(posterior)">ver</button>
+
+    </div>
+      <mat-button-toggle-group name="button-toggle" aria-label="acciones">
+        <button button-toggle *ngIf="serviceAuth.getTienePermisoPorDescripcion(['SUPERVISOR','ADMIN'])" aria-label="Crear calle"  (click)="crearCalle()">Crear calle</button>
+        <button button-toggle aria-label="Localidades y Barrios"  (click)="verLocalidades()">Loc. y B°</button>
+        <button button-toggle aria-label="Equivalencia entre Localidades del Sistema de Clasificación y SG" (click)="verCodigosEquivalencias()">Loc. Equi.</button>
+        <button button-toggle aria-label="Circuitos" (click)="verCircuitos()" >Circuitos</button>
+        <button button-toggle aria-label="Partidos y Departamentos" (click)="verDepartamentos()">Dptos.</button>
+        <button button-toggle aria-label="Guía de Códigos Postales" (click)="verCodigosPostales()">GCP</button>
+        <button button-toggle aria-label="Oficinas Seccionales del RENAPER, Hospitales y Consultados" (click)="verOsr()">OSR</button>
+   
+   
+      
+      </mat-button-toggle-group>
+    </div>
+</div>
+</div><!--class fondo-->

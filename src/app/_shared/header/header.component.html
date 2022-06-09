@@ -1,0 +1,6 @@
+    <mat-toolbar>
+      <span class="center">Sistemas de Clasificación   usuario: {{currentUser?.name}} {{currentUser?.apellido}}</span>
+      <button *ngIf="currentUser" button-toggle aria-label="cerrrar sesión"  (click)="cerrarSesion()">Cerrar sesión</button>
+    </mat-toolbar>
+
+  

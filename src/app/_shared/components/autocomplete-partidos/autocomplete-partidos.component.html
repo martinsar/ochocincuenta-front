@@ -1,0 +1,12 @@
+<form [formGroup]="formAutocomplate" >
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Partido</mat-label>
+    <input type="text" matInput formControlName="partido" (click)="clickSelectPartido()"  [matAutocomplete]="auto" [attr.disabled]="mostrarAutoCompletado">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" aria-label="partidos" (optionSelected)="changePartidos($event)">
+      <mat-option *ngFor="let option of filteredOptionsPartido | async" [value]="option">
+        {{option.detalle_seccion}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="f['partido'].errors && f['partido'].errors['required']">Ingrese un partido</mat-error>
+  </mat-form-field>
+</form>

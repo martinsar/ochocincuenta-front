@@ -1,0 +1,21 @@
+strong {
+    margin-right: 4px;
+}
+
+.mat-card-content {
+    display: flex;
+    flex-wrap: wrap;
+ 
+}
+
+.mat-card div {
+    flex: 1 0 21%;
+    margin: 5px;
+    padding: 8px;
+}
+
+.mat-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}

@@ -1,0 +1,109 @@
+<div class="container-page">
+    <div align="end">
+        <!--app-volver-button [url]="['/modulo-beneficiario']"></app-volver-button-->
+    </div>
+    <h2 class="mt-4 mb-4">Crear calle</h2>
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="formBuscador">
+                <div>
+                    <mat-error *ngIf="errorCalle">Ingrese al menos un numero o una cale</mat-error>
+                    <mat-form-field color="accent">
+                        <mat-label>nombre Calle</mat-label>
+                        <input type="text" aria-label="nombre de la calle" matInput formControlName="nombrecall" name="nombrecall" [attr.disabled]="!viewTramo">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>numero</mat-label>
+                        <input type="text" aria-label="numero" matInput formControlName="numero" name="numero" [attr.disabled]="!viewTramo">
+                    </mat-form-field>
+                </div>
+                <div>        
+                    <!--app-autocomplete-partidos (selectPartido)="changePartido($event)"  [mostrarAutoCompletado]="!viewTramo" [showDefaultFirstElement]="false"></app-autocomplete-partidos-->   
+                    <mat-form-field color="accent">
+                        <mat-label>Partido</mat-label>
+                        <input type="text" aria-label="partido" matInput formControlName="partido" name="partido" readonly>
+                        <mat-error *ngIf="f['partido'].errors && f['partido'].errors['required']">Ingrese una localiad</mat-error>
+                    </mat-form-field>
+                </div>
+                               
+            
+                <mat-icon aria-label="agregar tramos" (click)="cargaSiguiente()" *ngIf="!viewTramo" title="agregar tramo">add</mat-icon>
+                <div *ngIf="viewTramo">
+                    <mat-divider></mat-divider>
+                  
+                    <div>
+                        <mat-form-field color="accent">
+                            <mat-label>localidad</mat-label>
+                            <input type="text" aria-label="localidad" matInput formControlName="localidad" name="nombre" [attr.disabled]="!viewTramo">
+                            <mat-error *ngIf="f['localidad'].errors && f['localidad'].errors['required']">Ingrese una localiad</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field color="accent">
+                            <mat-label>tipo</mat-label>
+                            <input type="text" aria-label="tipo" matInput formControlName="tipo" name="apellido" [attr.disabled]="!viewTramo">
+                            <mat-error *ngIf="f['tipo'].errors && f['tipo'].errors['required']">Ingrese un tipo</mat-error>
+                        </mat-form-field>
+                    </div>
+                   
+                    <div>
+                        <mat-form-field color="accent">
+                            <mat-label>circuito</mat-label>
+                            <input type="text" aria-label="circuito" matInput formControlName="circuito" name="circuito" [attr.disabled]="!viewTramo">
+                            <mat-error *ngIf="f['circuito'].errors && f['circuito'].errors['required']">Ingrese el numero de calle</mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <!--cambio de lugar-->
+                    <div>
+                        <mat-form-field color="accent">
+                            <mat-label>vereda</mat-label>
+                            <input type="text" aria-label="vereda" matInput formControlName="vereda" name="vereda">
+                            <mat-error *ngIf="f['vereda'].errors && f['vereda'].errors['required']">Ingrese una vereda</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field color="accent">
+                            <mat-label>desde</mat-label>
+                            <input type="text" aria-label="desde" matInput formControlName="desde" name="desde">
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <mat-form-field color="accent">
+                            <mat-label>hasta</mat-label>
+                            <input type="text" aria-label="hasta" matInput formControlName="hasta" name="hasta">
+                            <mat-error *ngIf="f['hasta'].errors && f['hasta'].errors['required']">Ingrese un valor hasta</mat-error>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div>
+                        <mat-form-field color="accent">
+                            <mat-label>observacion</mat-label>
+                            <input type="text" aria-label="observacion" matInput formControlName="observacion" name="observacion">
+                        </mat-form-field>
+                    </div>
+                    <mat-icon (click)="saveTramo()">add</mat-icon>
+              
+                </div>
+               
+            </form>
+
+
+        </mat-card-content>
+        <mat-card-actions>
+
+            <button (click)="saveCalle()" data-message="Alta de Beneficiario" class="button-form" style="margin-left: 10px; width: 100%;" mat-raised-button color="primary"  [disabled]="arrayTramos.length==0">
+      Guardar <span class="material-icons md-36">save</span>
+    </button>
+    <button class="button" (click)="onNoClick() " class="button-form" style="margin-left: 10px; width: 100%;" mat-raised-button color="accent"><span class="material-icons md-36"></span> Cancelar</button>
+        </mat-card-actions>
+    </mat-card>
+
+
+
+
+
+
+</div>

@@ -1,0 +1,109 @@
+<div class="container-page">
+    <div align="end">
+        <!--app-volver-button [url]="['/modulo-beneficiario']"></app-volver-button-->
+    </div>
+    <h2 class="mt-4 mb-4">Alta de Beneficiario</h2>
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="formBuscador" (ngSubmit)="updateTramo()">
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>localidad</mat-label>
+                        <input type="text" aria-label="localidad" matInput formControlName="localidad" name="nombre">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>tipo</mat-label>
+                        <input type="text" aria-label="tipo" matInput formControlName="tipo" name="apellido">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>numero</mat-label>
+                        <input type="text" aria-label="numero" matInput formControlName="numero" name="numero">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>nombre Calle</mat-label>
+                        <input type="text" aria-label="nombrecall" matInput formControlName="nombrecall" name="nombrecall">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>coda</mat-label>
+                        <input type="number" aria-label="coda" matInput formControlName="coda" name="coda">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>anterior</mat-label>
+                        <input type="text" aria-label="anterior" matInput formControlName="anterior" name="anterior">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>codp</mat-label>
+                        <input type="number" aria-label="codp" matInput formControlName="codp" name="codp">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>posterior</mat-label>
+                        <input type="text" aria-label="posterior" matInput formControlName="posterior" name="posterior">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>vereda</mat-label>
+                        <input type="text" aria-label="vereda" matInput formControlName="vereda" name="vereda">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>desde</mat-label>
+                        <input type="text" aria-label="desde" matInput formControlName="desde" name="desde">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>hasta</mat-label>
+                        <input type="text" aria-label="hasta" matInput formControlName="hasta" name="hasta">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>circuito</mat-label>
+                        <input type="text" aria-label="circuito" matInput formControlName="circuito" name="circuito">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field color="accent">
+                        <mat-label>observacion</mat-label>
+                        <input type="text" aria-label="observacion" matInput formControlName="observacion" name="observacion">
+                    </mat-form-field>
+                </div>
+                <button class="button" type="submit" class="button-form" style="margin-left: 10px; width: 100%;" mat-raised-button color="primary"><span class="material-icons md-36"></span> Actualizar</button>
+                <button class="button" (click)="onNoClick() " class="button-form" style="margin-left: 10px; width: 100%;" mat-raised-button color="accent"><span class="material-icons md-36"></span> Cancelar</button>
+                
+            </form>
+
+
+        </mat-card-content>
+        <mat-card-actions>
+
+            <!--button (click)="updateTramo()" data-message="Alta de Beneficiario" class="button-form" style="margin-left: 10px; width: 100%;" mat-raised-button color="primary">
+      Guardar <span class="material-icons md-36">save</span>
+    </button-->
+   
+
+        </mat-card-actions>
+    </mat-card>
+
+
+
+
+
+
+</div>

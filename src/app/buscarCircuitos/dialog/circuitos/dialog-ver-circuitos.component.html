@@ -1,0 +1,43 @@
+<!--div role="dialog" aria-modal="true" aria-label="Ver Pasaje">
+    
+   
+
+
+</div-->
+
+<mat-card class="mat-elevation-z4">
+  <mat-card-header>
+    <mat-card-title>
+        <h2><i class="fa fa-database "></i>Circuitos</h2>
+    </mat-card-title>
+    <span class="fill-remaining-space "></span>
+    <mat-card-actions>
+        <span title="Cerrar " aria-label="Cerrar " (click)="onNoClick() " class="material-icons pointer ">
+            close
+        </span>
+        <!--button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button-->
+    </mat-card-actions>
+</mat-card-header>
+<mat-divider></mat-divider>
+        <!--select partidos -->
+        <mat-form-field appearance="fill">
+          <mat-label>Partidos</mat-label>
+          <mat-select [(ngModel)]="partidoSelected" (selectionChange)="changePartidos($event.value)" required>
+            <mat-option *ngFor="let partido of data.partidos" [value]="partido" >
+              {{partido.detalle_seccion}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span>{{circuitos?.length}} circuitos</span>
+
+
+        <!-- select partidos-->
+        <mat-card-content style="margin-top: 30px; justify-content: flex-start; ">
+          <ng-container *ngFor = "let circuito of circuitos; let isLast=last">
+            {{circuito.circuito}}{{isLast ? '' : ', '}}
+          </ng-container>
+        </mat-card-content>
+</mat-card>
+
+
+
